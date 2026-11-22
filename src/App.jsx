@@ -15,9 +15,8 @@ const artworks = [
 ];
 
 const films = [
-  { title: 'Stories Between the Frames', category: 'People & Culture', duration: '12 min', year: '2026', videoId: 'ScMzIvxBSi4', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1000&q=85', description: 'A visual journey into the people, places and little moments that make a story worth telling.' },
-  { title: 'The Art of Looking Closer', category: 'Creative Process', duration: '08 min', year: '2025', videoId: 'ysz5S6PUM-U', image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1000&q=85', description: 'Behind the scenes of finding inspiration in ordinary details and turning them into art.' },
-  { title: 'Voices of the Everyday', category: 'Documentary', duration: '16 min', year: '2025', videoId: 'aqz-KE-bpKQ', image: 'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=1000&q=85', description: 'An intimate collection of voices, memories and perspectives from everyday life.' }
+  { title: 'Forgotten Promises — Documentary 01', category: 'Documentary', duration: 'WATCH NOW', videoId: 'VlchH6x1DmA', image: 'https://img.youtube.com/vi/VlchH6x1DmA/hqdefault.jpg', description: 'Watch this documentary from the Forgotten Promises YouTube channel.' },
+  { title: 'Forgotten Promises — Documentary 02', category: 'Documentary', duration: 'WATCH NOW', videoId: 'pp-Jw_C3Cio', image: 'https://img.youtube.com/vi/pp-Jw_C3Cio/hqdefault.jpg', description: 'Watch this documentary from the Forgotten Promises YouTube channel.' }
 ];
 
 const categories = ['All', 'Portrait', 'Landscape', 'Abstract', 'Illustration'];
@@ -123,7 +122,7 @@ function App() {
 
       <section className="film-section" id="films">
         <div className="film-top section-pad"><SectionHeading eyebrow="03 / BEYOND THE FRAME" title={<>Stories worth <em>watching.</em></>} note="Documentaries, visual essays and stories from behind the lens. Press play and stay a while." light/><a href="https://www.youtube.com/@ForgottenPromises123" target="_blank" rel="noreferrer" className="youtube-link"><Youtube size={18}/> FIND US ON YOUTUBE <ArrowUpRight size={15}/></a></div>
-        <div className="film-grid section-pad">{films.map((film,i)=><article className="film-card" key={film.title}><button className="film-thumb" onClick={()=>setSelectedFilm(film)} aria-label={`Play ${film.title}`}><img src={film.image} alt={film.title} loading="lazy"/><span className="play-button"><Play fill="currentColor" size={18}/></span><span className="film-duration">{film.duration}</span><span className="film-index">FILM 0{i+1}</span></button><div className="film-meta"><div><span>{film.category} · {film.year}</span><h3>{film.title}</h3><p>{film.description}</p></div><button onClick={()=>setSelectedFilm(film)} className="film-arrow" aria-label="Watch film"><ArrowUpRight/></button></div></article>)}</div>
+        <div className="film-grid section-pad">{films.map((film,i)=><article className="film-card" key={film.title}><button className="film-thumb" onClick={()=>setSelectedFilm(film)} aria-label={`Play ${film.title}`}><img src={film.image} alt={film.title} loading="lazy"/><span className="play-button"><Play fill="currentColor" size={18}/></span><span className="film-duration">{film.duration}</span><span className="film-index">FILM 0{i+1}</span></button><div className="film-meta"><div><span>{film.category}</span><h3>{film.title}</h3><p>{film.description}</p></div><button onClick={()=>setSelectedFilm(film)} className="film-arrow" aria-label="Watch film"><ArrowUpRight/></button></div></article>)}</div>
         <div className="film-footer section-pad"><span>MORE FILMS. MORE POINTS OF VIEW.</span><a href="https://www.youtube.com/@ForgottenPromises123" target="_blank" rel="noreferrer" className="text-link light-link">Explore the YouTube channel <ArrowUpRight size={16}/></a></div>
       </section>
 
