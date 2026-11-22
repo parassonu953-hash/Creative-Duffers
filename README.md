@@ -1,45 +1,36 @@
 # Creative Duffers
 
-A responsive artist portfolio and creative storefront for original artwork, custom portrait enquiries, and YouTube documentaries.
+A responsive creative portfolio and companion Android/iOS app for artwork, custom portrait enquiries, and Forgotten Promises documentaries.
 
-## Features
+## Shared backend: Supabase
 
-- Responsive landing page with an editorial art direction.
-- Filterable artwork gallery.
-- Custom portrait enquiry form with reference-image preview.
-- Portrait options for medium, size, and number of subjects.
-- Documentary showcase with YouTube embed modal.
-- About, contact, and social links.
+The website and mobile app submit portrait enquiries to the same Supabase project. Reference photographs are uploaded to a **private** Storage bucket; public visitors can submit enquiries but cannot read customer records or download stored photos.
 
-## Run locally
+### 1. Create the Supabase project
+
+1. Create a project at [Supabase](https://supabase.com/).
+2. Open **SQL Editor**, paste the contents of [supabase/schema.sql](supabase/schema.sql), and run it.
+3. In **Project Settings → API**, copy the Project URL and the publishable key (or legacy anon key). Never use the `service_role` key in a browser or mobile app.
+
+### 2. Configure the website
+
+Copy `.env.example` to `.env.local` and fill in the two values:
+
+```env
+VITE_SUPABASE_URL=https://YOUR_PROJECT_ID.supabase.co
+VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY
+```
+
+Then run:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Create a production build with `npm run build`.
+### 3. Configure Android and iOS
 
-## Personalize before launch
-
-1. Replace the sample gallery images in `src/App.jsx` with your own artwork image URLs.
-2. The YouTube channel link is set to [Forgotten Promises](https://www.youtube.com/@ForgottenPromises123). Replace the sample documentary titles, descriptions, thumbnail URLs, and `videoId` values in the `films` array with your actual videos. Send the individual video links to have these featured accurately.
-3. Change the contact email `hello@creativeduffers.com` to your real email address.
-4. Replace the Instagram and YouTube profile links with your channel URLs.
-5. Add your own artist bio and portrait pricing when ready.
-
-## Order enquiries
-
-The current enquiry form opens the visitor's default email app with the order details. The selected reference image is previewed in the browser but is **not automatically attached** to the email. The visitor should attach it before sending. For a production checkout and secure image uploads, connect a backend or form service.
-
-## Deployment
-
-This is a Vite + React application and can be deployed to Vercel, Netlify, or GitHub Pages after configuring the desired build and hosting settings.
-
-
-## Mobile app (Android + iOS)
-
-The `mobile/` directory contains the Creative Duffers Expo / React Native app for Android and iOS.
+Copy `mobile/.env.example` to `mobile/.env` and use the same Supabase project URL and publishable/anon key, with the `EXPO_PUBLIC_` variable names shown in that file.
 
 ```bash
 cd mobile
@@ -47,10 +38,37 @@ npm install
 npx expo start
 ```
 
-See [mobile/README.md](mobile/README.md) for device testing and EAS production build instructions. The mobile app shares the Creative Duffers brand and includes the artwork gallery, portrait enquiry, documentary links, and studio information.
+Use the same project credentials for both clients. Do not commit real environment files or secret keys.
 
-The two featured Forgotten Promises documentaries are:
+### 4. View incoming enquiries
+
+Open the Supabase dashboard → **Table Editor → portrait_enquiries**. Each record contains the customer's contact details, requested portrait style/size, notes, source app, and the private reference image path. The private files are in **Storage → portrait-references**. Access photos from the Supabase dashboard as an authorized project administrator.
+
+## Current backend scope
+
+- Shared portrait-enquiry database for website and mobile app.
+- Optional reference-photo upload (JPG, PNG, WEBP; maximum 10 MB).
+- Private reference-photo bucket.
+- Row Level Security: public clients can insert enquiries but cannot select customer records.
+- No customer login, admin UI, automatic email notifications, payment gateway, or order-status workflow yet.
+- The public insert/upload policies are suitable for initial testing. Before a high-traffic public launch, add abuse protection (for example CAPTCHA and rate limiting) and a server-side notification function.
+
+## Other features
+
+- Responsive React + Vite website.
+- Expo / React Native app for Android and iOS.
+- Filterable artwork gallery (sample images must be replaced with original work).
+- Forgotten Promises documentary showcase.
+
+## Documentary videos
+
 1. **REALITY OF BOKARO STEEL CITY / BROKEN QUARTERS OF BKSC WHERE WORKERS LIVE**
 2. **Dhanbad’s Burning Land 🔥 Abandoned Mines That Are Still Alive / Ghar Chhod Kar Bhaag Rahe Log😳**
 
-Store publication still requires the relevant Google Play and Apple Developer accounts, store listings, app assets, and review approval.
+Channel: [Forgotten Promises](https://www.youtube.com/@ForgottenPromises123).
+
+## Deployment
+
+The website can be deployed to Vercel or Netlify after adding the two `VITE_SUPABASE_` environment variables to the hosting project. Configure the matching `EXPO_PUBLIC_SUPABASE_` variables in the Expo/EAS build environment before creating Android/iOS builds.
+
+Store publication still requires the relevant Google Play and Apple Developer accounts, store assets, and review approval.
