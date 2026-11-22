@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { decode } from 'base64-arraybuffer';
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
@@ -14,19 +15,19 @@ export async function submitMobilePortraitEnquiry({ form, image }) {
 
   let referenceImagePath = null;
   if (image?.uri) {
-    const response = await fetch(image.uri);
-    const blob = await response.blob();
-    const contentType = image.mimeType || blob.type || 'image/jpeg';
+    if (!image.base64) throw new Error('The selected photo could not be read. Please choose it again.');
+    const contentType = image.mimeType || 'image/jpeg';
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(contentType)) {
       throw new Error('Please choose a JPG, PNG or WEBP image.');
     }
-    if (blob.size > 10 * 1024 * 1024) throw new Error('Your reference image must be smaller than 10 MB.');
+    const fileBytes = decode(image.base64);
+    if (fileBytes.byteLength > 10 * 1024 * 1024) throw new Error('Your reference image must be smaller than 10 MB.');
 
     const extension = contentType.split('/')[1].replace('jpeg', 'jpg');
     referenceImagePath = `${Date.now()}-${Math.random().toString(36).slice(2)}.${extension}`;
     const { error: uploadError } = await supabase.storage
       .from('portrait-references')
-      .upload(referenceImagePath, blob, { contentType, upsert: false });
+      .upload(referenceImagePath, fileBytes, { contentType, upsert: false });
     if (uploadError) throw uploadError;
   }
 
