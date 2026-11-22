@@ -177,7 +177,7 @@ function About() {
       <Text style={styles.sectionTitle}>Curious minds.{"\n"}<Text style={styles.italic}>Creative hands.</Text>{"\n"}Open stories.</Text>
       <Text style={styles.body}>Creative Duffers is an independent creative space built around the joy of making things. From a pencil sketch to a personal portrait, from a canvas to a documentary frame — every creative work has a story worth sharing.</Text>
       <Action title="VISIT YOUTUBE CHANNEL ↗" onPress={() => Linking.openURL(CHANNEL)} secondary />
-      <Text style={styles.contactText}>For collaborations and enquiries:{"\n"}parassonu953@gmail.com</Text>
+      <Text style={styles.contactText}>Founder: {CONTACT_NAME}{'\n'}Email: {CONTACT_EMAIL}{'\n'}Phone: {CONTACT_PHONE}{'\n'}Public addresses:{'\n'}{CONTACT_ADDRESSES.join('\n')}</Text>
     </View>
   );
 }
