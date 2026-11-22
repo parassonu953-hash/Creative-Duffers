@@ -20,6 +20,10 @@ const films = [
 ];
 
 const categories = ['All', 'Portrait', 'Landscape', 'Abstract', 'Illustration'];
+const CONTACT_NAME = 'Sonu Kumar';
+const CONTACT_EMAIL = 'parassonu953@gmail.com';
+const CONTACT_PHONE = '9508000288';
+const CONTACT_ADDRESSES = ['Bokaro Steel City, Jharkhand – 827001', 'Jharia, Dhanbad, Jharkhand – 828111'];
 
 function SectionHeading({ eyebrow, title, note, light = false }) {
   return <div className={`section-heading ${light ? 'light' : ''}`}>
@@ -52,7 +56,7 @@ function App() {
     const body = encodeURIComponent(
       `Hello Creative Duffers!\n\nI'd like to enquire about a custom portrait.\n\nName: ${form.name}\nEmail: ${form.email}\nStyle: ${form.style}\nSize: ${form.size}\nPeople: ${form.people}\nDetails: ${form.details}\n\nReference image selected: ${file ? file.name : 'No image attached'}\n\nPlease let me know the next steps and pricing.`
     );
-    window.location.href = `mailto:hello@creativeduffers.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:parassonu953@gmail.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 
@@ -128,7 +132,12 @@ function App() {
 
       <section className="about section-pad" id="about"><div className="about-label"><span className="eyebrow">04 / A NOTE FROM THE STUDIO</span><span className="about-symbol">✳</span></div><div className="about-main"><h2>Curious minds.<br/><em>Creative hands.</em><br/>Open stories.</h2><div className="about-copy"><p>Creative Duffers is an independent creative space built around the joy of making things. From a pencil sketch to a personal portrait, from a canvas to a documentary frame — we believe every creative work has a story worth sharing.</p><p>This is a growing portfolio. New work, new films and new experiments will find their home here.</p><a className="text-link dark" href="#contact">Get to know us <ArrowUpRight size={16}/></a></div></div><div className="about-bottom"><span>MADE IN INDIA</span><span>ART IS A WAY OF PAYING ATTENTION.</span><span>✳</span></div></section>
 
-      <section className="contact" id="contact"><div className="contact-inner"><span className="eyebrow">HAVE A GOOD IDEA?</span><h2>Let's make<br/><em>something matter.</em></h2><p>For portrait commissions, collaborations, film projects or just to say hello — we'd love to hear from you.</p><a href="mailto:hello@creativeduffers.com" className="button button-light">Start a conversation <Mail size={16}/></a><div className="contact-social"><a href="https://www.instagram.com/" target="_blank" rel="noreferrer"><Instagram size={17}/> INSTAGRAM <ArrowUpRight size={13}/></a><a href="https://www.youtube.com/@ForgottenPromises123" target="_blank" rel="noreferrer"><Youtube size={17}/> YOUTUBE <ArrowUpRight size={13}/></a></div></div><div className="contact-decoration">CD✳</div></section>
+      <section className="contact" id="contact"><div className="contact-inner"><span className="eyebrow">HAVE A GOOD IDEA?</span><h2>Let's make<br/><em>something matter.</em></h2><p>For portrait commissions, collaborations, film projects or just to say hello — we'd love to hear from you.</p><a href="mailto:parassonu953@gmail.com" className="button button-light">Start a conversation <Mail size={16}/></a><div className="public-contact-details">
+        <p><strong>Founder</strong> {CONTACT_NAME}</p>
+        <p><strong>Email</strong> <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+        <p><strong>Phone</strong> <a href={`tel:${CONTACT_PHONE}`}>{CONTACT_PHONE}</a></p>
+        <p><strong>Locations</strong> {CONTACT_ADDRESSES.map((address) => <span key={address}>{address}</span>)}</p>
+      </div><div className="contact-social"><a href="https://www.instagram.com/" target="_blank" rel="noreferrer"><Instagram size={17}/> INSTAGRAM <ArrowUpRight size={13}/></a><a href="https://www.youtube.com/@ForgottenPromises123" target="_blank" rel="noreferrer"><Youtube size={17}/> YOUTUBE <ArrowUpRight size={13}/></a></div></div><div className="contact-decoration">CD✳</div></section>
     </main>
 
     <footer className="footer"><a href="#home" className="brand footer-brand"><span className="brand-mark">CD<span>✳</span></span><span>CREATIVE<br/>DUFFERS</span></a><span>© 2026 CREATIVE DUFFERS. MADE WITH CURIOSITY.</span><a href="#home" className="back-top">BACK TO TOP ↑</a></footer>
