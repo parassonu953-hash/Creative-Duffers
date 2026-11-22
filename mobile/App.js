@@ -146,7 +146,7 @@ function Portrait() {
       Alert.alert('Photo permission needed', 'Allow photo library access to attach a reference image.');
       return;
     }
-    const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], quality: 0.8 });
+    const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], quality: 0.8, base64: true });
     if (!result.canceled && result.assets?.[0]) setImage(result.assets[0]);
   };
 
