@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "scheme": "creativeduffers",
+    "plugins": ["expo-image-picker"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.creativeduffers.app"
