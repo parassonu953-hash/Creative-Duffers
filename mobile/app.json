@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Creative Duffers",
+    "slug": "creative-duffers",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "scheme": "creativeduffers",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.creativeduffers.app"
+    },
+    "android": {
+      "package": "com.creativeduffers.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#171613"
+      }
+    }
+  }
+}
