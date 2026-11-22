@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import * as ImagePicker from 'expo-image-picker';
+import { submitMobilePortraitEnquiry } from './backend';
 import {
   Alert, Linking, SafeAreaView, ScrollView, StatusBar, StyleSheet,
   Text, TextInput, TouchableOpacity, View, Image, Platform
@@ -135,23 +137,34 @@ function Portrait() {
   const [style, setStyle] = useState('Graphite portrait');
   const [size, setSize] = useState('A4');
   const [details, setDetails] = useState('');
+  const [image, setImage] = useState(null);
+  const [sending, setSending] = useState(false);
+
+  const chooseImage = async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert('Photo permission needed', 'Allow photo library access to attach a reference image.');
+      return;
+    }
+    const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], quality: 0.8 });
+    if (!result.canceled && result.assets?.[0]) setImage(result.assets[0]);
+  };
 
   const send = async () => {
     if (!name.trim() || !email.trim()) {
       Alert.alert('A little more detail', 'Please enter your name and email address.');
       return;
     }
-    const subject = encodeURIComponent('Custom portrait enquiry — Creative Duffers');
-    const body = encodeURIComponent(
-      'Hello Creative Duffers!\n\nName: ' + name +
-      '\nEmail: ' + email + '\nStyle: ' + style +
-      '\nSize: ' + size + '\nDetails: ' + details +
-      '\n\nPlease let me know the next steps and pricing.'
-    );
-    const url = 'mailto:parassonu953@gmail.com?subject=' + subject + '&body=' + body;
-    const supported = await Linking.canOpenURL(url);
-    if (supported) Linking.openURL(url);
-    else Alert.alert('Email app not found', 'Please email parassonu953@gmail.com with your portrait details.');
+    setSending(true);
+    try {
+      await submitMobilePortraitEnquiry({ form: { name, email, style, size, details, people: '1' }, image });
+      Alert.alert('Enquiry received', 'Thank you! Your portrait enquiry has been saved. We will contact you by email.');
+      setName(''); setEmail(''); setDetails(''); setImage(null);
+    } catch (error) {
+      Alert.alert('Could not send enquiry', error?.message || 'Please try again later.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -164,8 +177,14 @@ function Portrait() {
       <Field label="PREFERRED STYLE" value={style} onChangeText={setStyle} placeholder="Graphite, watercolour, digital..." />
       <Field label="ARTWORK SIZE" value={size} onChangeText={setSize} placeholder="A4, A3 or custom" />
       <Field label="TELL US ABOUT YOUR IDEA" value={details} onChangeText={setDetails} placeholder="A birthday gift, a family memory..." multiline />
-      <Action title="SEND PORTRAIT ENQUIRY  ↗" onPress={send} />
-      <Text style={styles.smallNote}>This opens your email app. No payment is collected in the app. Add a reference photo to your email before sending.</Text>
+      <TouchableOpacity onPress={chooseImage} style={styles.photoPicker}>
+        <Text style={styles.actionTextSecondary}>{image ? 'REFERENCE PHOTO SELECTED' : 'ADD REFERENCE PHOTO  +'}</Text>
+        {image && <Image source={{ uri: image.uri }} style={styles.selectedPhoto} />}
+      </TouchableOpacity>
+      <TouchableOpacity onPress={send} disabled={sending} style={styles.action}>
+        <Text style={styles.actionText}>{sending ? 'SENDING ENQUIRY…' : 'SEND PORTRAIT ENQUIRY  ↗'}</Text>
+      </TouchableOpacity>
+      <Text style={styles.smallNote}>Your enquiry and optional reference photo are submitted securely. Photos must be JPG, PNG or WEBP, up to 10 MB.</Text>
     </View>
   );
 }
@@ -238,6 +257,8 @@ const styles = StyleSheet.create({
   body: { color: MUTED, fontSize: 14, lineHeight: 23, marginBottom: 22 },
   action: { backgroundColor: ORANGE, paddingVertical: 15, paddingHorizontal: 18, alignSelf: 'flex-start', marginBottom: 20, borderRadius: 2 },
   actionSecondary: { backgroundColor: 'transparent', borderWidth: 1, borderColor: '#71685c' },
+  photoPicker: { borderWidth: 1, borderStyle: 'dashed', borderColor: '#71685c', padding: 15, marginBottom: 18, alignItems: 'center' },
+  selectedPhoto: { width: 90, height: 90, marginTop: 12, borderRadius: 3 },
   actionText: { color: INK, fontSize: 10, fontWeight: '800', letterSpacing: 1 },
   actionTextSecondary: { color: CREAM },
   heroImage: { width: '100%', height: 330, marginTop: 15, borderRadius: 3, backgroundColor: PANEL },
