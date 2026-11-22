@@ -10,6 +10,10 @@ const CREAM = '#f2eee5';
 const MUTED = '#aaa397';
 const ORANGE = '#d58a4b';
 const CHANNEL = 'https://www.youtube.com/@ForgottenPromises123';
+const CONTACT_NAME = 'Sonu Kumar';
+const CONTACT_EMAIL = 'parassonu953@gmail.com';
+const CONTACT_PHONE = '9508000288';
+const CONTACT_ADDRESSES = ['Bokaro Steel City, Jharkhand – 827001', 'Jharia, Dhanbad, Jharkhand – 828111'];
 
 const artworks = [
   { title: 'Quiet Conversations', type: 'Portrait', image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=900&q=85' },
@@ -144,10 +148,10 @@ function Portrait() {
       '\nSize: ' + size + '\nDetails: ' + details +
       '\n\nPlease let me know the next steps and pricing.'
     );
-    const url = 'mailto:hello@creativeduffers.com?subject=' + subject + '&body=' + body;
+    const url = 'mailto:parassonu953@gmail.com?subject=' + subject + '&body=' + body;
     const supported = await Linking.canOpenURL(url);
     if (supported) Linking.openURL(url);
-    else Alert.alert('Email app not found', 'Please email hello@creativeduffers.com with your portrait details.');
+    else Alert.alert('Email app not found', 'Please email parassonu953@gmail.com with your portrait details.');
   };
 
   return (
@@ -173,7 +177,7 @@ function About() {
       <Text style={styles.sectionTitle}>Curious minds.{"\n"}<Text style={styles.italic}>Creative hands.</Text>{"\n"}Open stories.</Text>
       <Text style={styles.body}>Creative Duffers is an independent creative space built around the joy of making things. From a pencil sketch to a personal portrait, from a canvas to a documentary frame — every creative work has a story worth sharing.</Text>
       <Action title="VISIT YOUTUBE CHANNEL ↗" onPress={() => Linking.openURL(CHANNEL)} secondary />
-      <Text style={styles.contactText}>For collaborations and enquiries:{"\n"}hello@creativeduffers.com</Text>
+      <Text style={styles.contactText}>For collaborations and enquiries:{"\n"}parassonu953@gmail.com</Text>
     </View>
   );
 }
