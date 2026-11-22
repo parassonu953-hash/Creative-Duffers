@@ -35,3 +35,22 @@ The current enquiry form opens the visitor's default email app with the order de
 ## Deployment
 
 This is a Vite + React application and can be deployed to Vercel, Netlify, or GitHub Pages after configuring the desired build and hosting settings.
+
+
+## Mobile app (Android + iOS)
+
+The `mobile/` directory contains the Creative Duffers Expo / React Native app for Android and iOS.
+
+```bash
+cd mobile
+npm install
+npx expo start
+```
+
+See [mobile/README.md](mobile/README.md) for device testing and EAS production build instructions. The mobile app shares the Creative Duffers brand and includes the artwork gallery, portrait enquiry, documentary links, and studio information.
+
+The two featured Forgotten Promises documentaries are:
+1. **REALITY OF BOKARO STEEL CITY / BROKEN QUARTERS OF BKSC WHERE WORKERS LIVE**
+2. **Dhanbad’s Burning Land 🔥 Abandoned Mines That Are Still Alive / Ghar Chhod Kar Bhaag Rahe Log😳**
+
+Store publication still requires the relevant Google Play and Apple Developer accounts, store listings, app assets, and review approval.
