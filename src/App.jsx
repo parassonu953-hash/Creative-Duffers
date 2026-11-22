@@ -40,6 +40,8 @@ function App() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [form, setForm] = useState({ name: '', email: '', style: 'Graphite portrait', size: 'A4', people: '1', details: '' });
 
   const visibleArtworks = useMemo(() => filter === 'All' ? artworks : artworks.filter(a => a.type === filter), [filter]);
@@ -51,14 +53,23 @@ function App() {
     setFile(picked);
     setPreview(URL.createObjectURL(picked));
   };
-  const sendOrder = (event) => {
+  const sendOrder = async (event) => {
     event.preventDefault();
-    const subject = encodeURIComponent('Custom portrait enquiry — Creative Duffers');
-    const body = encodeURIComponent(
-      `Hello Creative Duffers!\n\nI'd like to enquire about a custom portrait.\n\nName: ${form.name}\nEmail: ${form.email}\nStyle: ${form.style}\nSize: ${form.size}\nPeople: ${form.people}\nDetails: ${form.details}\n\nReference image selected: ${file ? file.name : 'No image attached'}\n\nPlease let me know the next steps and pricing.`
-    );
-    window.location.href = `mailto:parassonu953@gmail.com?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    setSending(true);
+    setSubmitError('');
+    setSubmitted(false);
+    try {
+      await submitPortraitEnquiry({ form, file, source: 'website' });
+      setSubmitted(true);
+      setForm({ name: '', email: '', style: 'Graphite portrait', size: 'A4', people: '1', details: '' });
+      setFile(null);
+      setPreview('');
+      event.target.reset();
+    } catch (error) {
+      setSubmitError(error?.message || 'Something went wrong. Please try again.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const closeMenu = () => setMenuOpen(false);
@@ -113,15 +124,15 @@ function App() {
         <div className="order-intro"><span className="eyebrow">LET'S MAKE IT PERSONAL</span><h2>Your memory,<br/><em>our canvas.</em></h2><p>Tell us a little about the portrait you have in mind. We'll get back to you with availability, pricing and the next steps.</p><div className="order-promise"><Sparkles size={18}/><span>No payment now. We'll discuss every detail with you first.</span></div></div>
         <form className="order-form" onSubmit={sendOrder}>
           <div className="form-top"><span>PORTRAIT ENQUIRY FORM</span><span>01 — 04</span></div>
-          {submitted && <div className="success-note"><CheckCircle2 size={18}/> Your email app should open with your enquiry. Attach your reference photo before sending.</div>}
+          {submitted && <div className="success-note"><CheckCircle2 size={18}/> Your enquiry has been received. We’ll contact you by email soon.</div>}{submitError && <div className="error-note" role="alert">{submitError}</div>}
           <div className="form-grid"><label>Your name<input required name="name" value={form.name} onChange={updateForm} placeholder="Your full name"/></label><label>Email address<input required type="email" name="email" value={form.email} onChange={updateForm} placeholder="you@example.com"/></label>
           <label>Preferred style<select name="style" value={form.style} onChange={updateForm}><option>Graphite portrait</option><option>Colour pencil</option><option>Watercolour</option><option>Digital illustration</option><option>Oil / acrylic painting</option><option>Not sure — guide me</option></select><ChevronDown className="select-icon" size={15}/></label>
           <label>Artwork size<select name="size" value={form.size} onChange={updateForm}><option>A5</option><option>A4</option><option>A3</option><option>Custom size</option></select><ChevronDown className="select-icon" size={15}/></label>
           <label>Number of people<select name="people" value={form.people} onChange={updateForm}><option value="1">1 person</option><option value="2">2 people</option><option value="3">3 people</option><option value="4+">4 or more</option><option>Pet portrait</option></select><ChevronDown className="select-icon" size={15}/></label>
           <label className="full">Tell us about your idea<textarea name="details" value={form.details} onChange={updateForm} rows="3" placeholder="A birthday gift, a family memory, a portrait of someone special..."/></label>
           <label className="full upload-label"><span>REFERENCE PHOTOGRAPH <small>(JPG, PNG or WEBP)</small></span><input type="file" accept="image/png,image/jpeg,image/webp" onChange={chooseFile}/><span className="upload-box">{preview ? <><img src={preview} alt="Selected reference preview"/><span>{file?.name}</span></> : <><ImagePlus size={22}/><strong>Choose a photograph</strong><small>Click to browse your files</small></>}</span></label></div>
-          <button type="submit" className="button button-dark submit-button">Send portrait enquiry <Send size={16}/></button>
-          <p className="form-disclaimer">Your photograph is used only to discuss your commission. Please don't upload sensitive images.</p>
+          <button type="submit" className="button button-dark submit-button" disabled={sending}>{sending ? "Sending enquiry…" : "Send portrait enquiry"} <Send size={16}/></button>
+          <p className="form-disclaimer">Your reference photo is stored privately and used only to discuss your commission. JPG, PNG or WEBP, up to 10 MB.</p>
         </form>
       </section>
 
