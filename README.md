@@ -23,7 +23,7 @@ Create a production build with `npm run build`.
 ## Personalize before launch
 
 1. Replace the sample gallery images in `src/App.jsx` with your own artwork image URLs.
-2. Update the documentary titles, descriptions, thumbnail URLs, and `videoId` values in the `films` array with your own YouTube videos.
+2. The YouTube channel link is set to [Forgotten Promises](https://www.youtube.com/@ForgottenPromises123). Replace the sample documentary titles, descriptions, thumbnail URLs, and `videoId` values in the `films` array with your actual videos. Send the individual video links to have these featured accurately.
 3. Change the contact email `hello@creativeduffers.com` to your real email address.
 4. Replace the Instagram and YouTube profile links with your channel URLs.
 5. Add your own artist bio and portrait pricing when ready.
