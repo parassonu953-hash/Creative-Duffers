@@ -15,8 +15,8 @@ const artworks = [
 ];
 
 const films = [
-  { title: 'Forgotten Promises — Documentary 01', category: 'Documentary', duration: 'WATCH NOW', videoId: 'VlchH6x1DmA', image: 'https://img.youtube.com/vi/VlchH6x1DmA/hqdefault.jpg', description: 'Watch this documentary from the Forgotten Promises YouTube channel.' },
-  { title: 'Forgotten Promises — Documentary 02', category: 'Documentary', duration: 'WATCH NOW', videoId: 'pp-Jw_C3Cio', image: 'https://img.youtube.com/vi/pp-Jw_C3Cio/hqdefault.jpg', description: 'Watch this documentary from the Forgotten Promises YouTube channel.' }
+  { title: 'REALITY OF BOKARO STEEL CITY / BROKEN QUARTERS OF BKSC WHERE WORKERS LIVE', category: 'Documentary', duration: 'WATCH NOW', videoId: 'VlchH6x1DmA', image: 'https://img.youtube.com/vi/VlchH6x1DmA/hqdefault.jpg', description: 'Watch this documentary from the Forgotten Promises YouTube channel.' },
+  { title: 'Dhanbad’s Burning Land 🔥 Abandoned Mines That Are Still Alive / Ghar Chhod Kar Bhaag Rahe Log😳', category: 'Documentary', duration: 'WATCH NOW', videoId: 'pp-Jw_C3Cio', image: 'https://img.youtube.com/vi/pp-Jw_C3Cio/hqdefault.jpg', description: 'Watch this documentary from the Forgotten Promises YouTube channel.' }
 ];
 
 const categories = ['All', 'Portrait', 'Landscape', 'Abstract', 'Illustration'];
@@ -133,7 +133,7 @@ function App() {
 
     <footer className="footer"><a href="#home" className="brand footer-brand"><span className="brand-mark">CD<span>✳</span></span><span>CREATIVE<br/>DUFFERS</span></a><span>© 2026 CREATIVE DUFFERS. MADE WITH CURIOSITY.</span><a href="#home" className="back-top">BACK TO TOP ↑</a></footer>
 
-    {selectedFilm && <div className="video-modal" role="dialog" aria-modal="true" aria-label={selectedFilm.title} onClick={()=>setSelectedFilm(null)}><button className="modal-close" onClick={()=>setSelectedFilm(null)} aria-label="Close video"><X/></button><div className="video-frame" onClick={e=>e.stopPropagation()}><iframe src={`https://www.youtube-nocookie.com/embed/${selectedFilm.videoId}?autoplay=1&rel=0`} title={selectedFilm.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/><div className="video-caption"><span>{selectedFilm.category} · {selectedFilm.year}</span><h3>{selectedFilm.title}</h3><p>{selectedFilm.description}</p></div></div></div>}
+    {selectedFilm && <div className="video-modal" role="dialog" aria-modal="true" aria-label={selectedFilm.title} onClick={()=>setSelectedFilm(null)}><button className="modal-close" onClick={()=>setSelectedFilm(null)} aria-label="Close video"><X/></button><div className="video-frame" onClick={e=>e.stopPropagation()}><iframe src={`https://www.youtube-nocookie.com/embed/${selectedFilm.videoId}?autoplay=1&rel=0`} title={selectedFilm.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/><div className="video-caption"><span>{selectedFilm.category}</span><h3>{selectedFilm.title}</h3><p>{selectedFilm.description}</p></div></div></div>}
   </>;
 }
 
