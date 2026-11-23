@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { submitPortraitEnquiry } from './lib/backend.js';
 import {
   ArrowDown, ArrowRight, ArrowUpRight, Play, Menu, X, Instagram,
